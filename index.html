@@ -3,179 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <title>Job Application Tracker</title>
-
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-slate-900 text-white">
+<body class="bg-slate-900 text-white min-h-screen">
 
-  <div class="max-w-6xl mx-auto p-4">
+<div class="max-w-6xl mx-auto p-4">
 
-    
-    <h1 class="text-2xl font-bold mb-4">Job Application Tracker</h1>
+  <h1 class="text-2xl font-bold mb-6">Job Application Tracker</h1>
 
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-      <div class="bg-slate-800 p-4 rounded text-center">
-        <p>Total</p>
-
-        <h2 id="totalCount" class="text-2xl font-bold">0</h2>
-      </div>
-
-      <div class="bg-slate-800 p-4 rounded text-center">
-        <p>Interview</p>
-
-        <h2 id="interviewCount" class="text-2xl font-bold">0</h2>
-      </div>
-
-      <div class="bg-slate-800 p-4 rounded text-center">
-        <p>Rejected</p>
-
-        <h2 id="rejectedCount" class="text-2xl font-bold">0</h2>
-      </div>
-    </div>
-    
-
-    
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">Available Jobs</h2>
-      <span id="tabCount">0</span>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="bg-slate-800 p-4 rounded text-center">
+      <p>Total</p>
+      <h2 id="totalCount" class="text-2xl font-bold">0</h2>
     </div>
 
-    
-    <div class="flex gap-2 mb-6">
-      <button onclick="changeTab('all')" class="bg-blue-600 px-3 py-1 rounded">All</button>
-      <button onclick="changeTab('interview')" class="bg-slate-700 px-3 py-1 rounded">Interview</button>
-      <button onclick="changeTab('rejected')" class="bg-slate-700 px-3 py-1 rounded">Rejected</button>
+    <div class="bg-slate-800 p-4 rounded text-center">
+      <p>Interview</p>
+      <h2 id="interviewCount" class="text-2xl font-bold">0</h2>
     </div>
 
-    
-    <div id="jobList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-
-    
-    <div id="emptyState" class="hidden text-center mt-10">
-      <img class="mx-auto w-20 mb-4"
-        src="https://cdn-icons-png.flaticon.com/512/4076/4076503.png" />
-      <h3 class="text-lg font-semibold">No jobs available</h3>
-      <p class="text-slate-400">Nothing found in this tab</p>
+    <div class="bg-slate-800 p-4 rounded text-center">
+      <p>Rejected</p>
+      <h2 id="rejectedCount" class="text-2xl font-bold">0</h2>
     </div>
-
   </div>
 
-<script>
   
-  let jobs = [
-    { id: 1, company: "Mobile First Corp", position: "React Native Developer", location: "Remote", type: "Full-time", salary: "$130k", desc: "Build mobile apps", status: "all" },
-    { id: 2, company: "WebFlow Agency", position: "Web Designer", location: "USA", type: "Part-time", salary: "$90k", desc: "Design websites", status: "all" },
-    { id: 3, company: "TechSoft", position: "Frontend Developer", location: "Remote", type: "Full-time", salary: "$110k", desc: "Frontend UI work", status: "all" },
-    { id: 4, company: "CodeLab", position: "JavaScript Developer", location: "UK", type: "Contract", salary: "$100k", desc: "JS based projects", status: "all" },
-    { id: 5, company: "NextGen", position: "UI Engineer", location: "Remote", type: "Full-time", salary: "$120k", desc: "UI systems", status: "all" },
-    { id: 6, company: "Pixel Ltd", position: "Frontend Dev", location: "Canada", type: "Part-time", salary: "$95k", desc: "Frontend tasks", status: "all" },
-    { id: 7, company: "DesignPro", position: "Web Developer", location: "Remote", type: "Full-time", salary: "$105k", desc: "Web applications", status: "all" },
-    { id: 8, company: "Appify", position: "JS Engineer", location: "USA", type: "Full-time", salary: "$115k", desc: "JavaScript apps", status: "all" }
-  ];
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-semibold">Available Jobs</h2>
+    <span class="bg-slate-800 px-3 py-1 rounded">
+      Tab Count: <span id="tabCount">0</span>
+    </span>
+  </div>
 
-  let currentTab = "all";
+  
+  <div class="flex gap-2 mb-6">
+    <button onclick="changeTab('all')" class="bg-blue-600 px-3 py-2 rounded">All</button>
+    <button onclick="changeTab('interview')" class="bg-slate-700 px-3 py-2 rounded">Interview</button>
+    <button onclick="changeTab('rejected')" class="bg-slate-700 px-3 py-2 rounded">Rejected</button>
+  </div>
 
-  function changeTab(tab) {
-    currentTab = tab;
-    renderJobs();
-  }
+ 
+  <div id="jobList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
-  function updateStatus(id, status) {
-    jobs.forEach(job => {
-      if (job.id === id) {
-        job.status = status;
-      }
-    });
-    renderJobs();
-  }
-  function renderJobs() {
-    const jobList = document.getElementById("jobList");
-    const emptyState = document.getElementById("emptyState");
+  
+  <div id="emptyState" class="hidden text-center mt-10">
+    <h3 class="text-lg font-semibold">No jobs available</h3>
+    <p class="text-slate-400">Nothing found in this tab</p>
+  </div>
 
-    let filteredJobs =
-      currentTab === "all"
-        ? jobs
-        : jobs.filter(job => job.status === currentTab);
+</div>
 
-    jobList.innerHTML = "";
+<script>
 
-    if (filteredJobs.length === 0) {
-      emptyState.classList.remove("hidden");
-    } else {
-      emptyState.classList.add("hidden");
-    }
+let jobs = [
+  { id: 1, company: "Mobile First Corp", position: "React Native Developer", location: "Remote", type: "Full-time", salary: "$130k", desc: "Build mobile apps", status: "all" },
+  { id: 2, company: "WebFlow Agency", position: "Web Designer", location: "USA", type: "Part-time", salary: "$90k", desc: "Design websites", status: "all" },
+  { id: 3, company: "TechSoft", position: "Frontend Developer", location: "Remote", type: "Full-time", salary: "$110k", desc: "Frontend UI work", status: "all" },
+  { id: 4, company: "CodeLab", position: "JavaScript Developer", location: "UK", type: "Contract", salary: "$100k", desc: "JS projects", status: "all" },
+  { id: 5, company: "NextGen", position: "UI Engineer", location: "Remote", type: "Full-time", salary: "$120k", desc: "UI systems", status: "all" },
+  { id: 6, company: "Pixel Ltd", position: "Frontend Dev", location: "Canada", type: "Part-time", salary: "$95k", desc: "Frontend tasks", status: "all" },
+  { id: 7, company: "DesignPro", position: "Web Developer", location: "Remote", type: "Full-time", salary: "$105k", desc: "Web applications", status: "all" },
+  { id: 8, company: "Appify", position: "JS Engineer", location: "USA", type: "Full-time", salary: "$115k", desc: "JavaScript apps", status: "all" }
+];
 
-    filteredJobs.forEach(job => {
-      jobList.innerHTML += `
-        <div class="bg-slate-800 p-4 rounded relative">
+let currentTab = "all";
 
-          <!-- Badge -->
-          ${
-            job.status === "interview"
-              ? '<span class="absolute top-2 right-2 bg-green-600 text-xs px-2 py-1 rounded">Interview</span>'
-              : job.status === "rejected"
-              ? '<span class="absolute top-2 right-2 bg-red-600 text-xs px-2 py-1 rounded">Rejected</span>'
-              : ''
-          }
-
-          <h3 class="font-bold">${job.company}</h3>
-          <p class="text-slate-300">${job.position}</p>
-          <p class="text-sm">${job.location} • ${job.type}</p>
-          <p class="text-sm">${job.salary}</p>
-          <p class="text-sm text-slate-400 mb-3">${job.desc}</p>
-
-          <div class="flex gap-2">
-            <button
-              onclick="updateStatus(${job.id}, 'interview')"
-              class="px-3 py-1 rounded text-white transition
-                ${job.status === 'interview'
-                  ? 'bg-green-600 hover:bg-green-500'
-                  : 'bg-green-800 hover:bg-green-600'}">
-              Interview
-            </button>
-
-            <button
-              onclick="updateStatus(${job.id}, 'rejected')"
-              class="px-3 py-1 rounded text-white transition
-                ${job.status === 'rejected'
-                  ? 'bg-red-600 hover:bg-red-500'
-                  : 'bg-red-800 hover:bg-red-600'}">
-              Rejected
-            </button>
-          </div>
-        </div>
-      `;
-    });
-
-    
-    document.getElementById("totalCount").innerText = jobs.length;
-    document.getElementById("interviewCount").innerText =
-      jobs.filter(j => j.status === "interview").length;
-    document.getElementById("rejectedCount").innerText =
-      jobs.filter(j => j.status === "rejected").length;
-
-    document.getElementById("tabCount").innerText = filteredJobs.length;
-  }
-
+function changeTab(tab) {
+  currentTab = tab;
   renderJobs();
+}
+
+function updateStatus(id, status) {
+  jobs = jobs.map(job => job.id === id ? { ...job, status } : job);
+  renderJobs();
+}
+
+
+function deleteJob(id) {
+  jobs = jobs.filter(job => job.id !== id);
+  renderJobs();
+}
+
+function renderJobs() {
+
+  const jobList = document.getElementById("jobList");
+  const emptyState = document.getElementById("emptyState");
+
+  const filteredJobs =
+    currentTab === "all"
+      ? jobs
+      : jobs.filter(job => job.status === currentTab);
+
+  jobList.innerHTML = "";
+
+  if (filteredJobs.length === 0) {
+    emptyState.classList.remove("hidden");
+  } else {
+    emptyState.classList.add("hidden");
+  }
+
+  filteredJobs.forEach(job => {
+    jobList.innerHTML += `
+      <div class="bg-slate-800 p-4 rounded relative border border-slate-700">
+
+        <!-- Delete Icon Top Right -->
+        <button onclick="deleteJob(${job.id})"
+          class="absolute top-3 right-3 text-red-500 hover:text-red-400 text-lg">
+          🗑
+        </button>
+
+        ${job.status === "interview"
+          ? '<span class="absolute top-3 left-3 bg-green-600 text-xs px-2 py-1 rounded">Interview</span>'
+          : job.status === "rejected"
+          ? '<span class="absolute top-3 left-3 bg-red-600 text-xs px-2 py-1 rounded">Rejected</span>'
+          : ''
+        }
+
+        <h3 class="font-bold mt-6">${job.company}</h3>
+        <p class="text-slate-300">${job.position}</p>
+        <p class="text-sm">${job.location} • ${job.type}</p>
+        <p class="text-sm">${job.salary}</p>
+        <p class="text-sm text-slate-400 mb-3">${job.desc}</p>
+
+        <div class="flex gap-2 mt-3">
+          <button
+            onclick="updateStatus(${job.id}, 'interview')"
+            class="px-3 py-1 rounded ${job.status === 'interview' ? 'bg-green-600' : 'bg-green-800'}">
+            Interview
+          </button>
+
+          <button
+            onclick="updateStatus(${job.id}, 'rejected')"
+            class="px-3 py-1 rounded ${job.status === 'rejected' ? 'bg-red-600' : 'bg-red-800'}">
+            Rejected
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("totalCount").innerText = jobs.length;
+  document.getElementById("interviewCount").innerText =
+    jobs.filter(j => j.status === "interview").length;
+  document.getElementById("rejectedCount").innerText =
+    jobs.filter(j => j.status === "rejected").length;
+  document.getElementById("tabCount").innerText = filteredJobs.length;
+}
+
+renderJobs();
+
 </script>
 
 </body>
 </html>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
